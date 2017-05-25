@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	.show-prefixes{
+		background-color: #ff9800;
+		padding: 50px;
+		width: 300px;
+		height: 100px;
+	}
+</style>
+<body>
+<!--  -->
+<h1>Online Border Radius Generator</h1>
+<div>Enter size from 0 till 200</div>
+<input id="inputNums" style="margin: 10px auto;">
+<div style="margin: 10px auto;">
+	<strong>Oninput: <span id="result"></span><span id="re"></span></strong>
+</div>
+<div class="show-prefixes" id="show-prefixes">
+	<div id="prefixes"></div>
+</div>
+<!--  -->
+
+<script type="text/javascript">
+// VARIABLES
+var borderRadius = document.getElementById("inputNums");
+var onlineResult = document.getElementById("show-prefixes");
+var includeResult = document.getElementById('prefixes');
+
+// CHECK FOR INTEGER
+function getValFromInput(value){
+	var val = parseFloat(value);
+	if(isNaN(val) || val < 0){
+		val = 0;
+	}else if(val > 200){
+		val = 200;
+	}
+	return val;
+}
+// COPING
+includeResult.addEventListener('click', function(){
+	var text = includeResult.innerHTML;
+	window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+})
+
+// ONLINE SHOWING RESULT
+borderRadius.oninput = function() {
+	var currentBR = getValFromInput(borderRadius.value);
+
+    document.getElementById('result').innerHTML = currentBR + "px";
+
+    var pref = {
+      webkit:'-webkit-border-radius: ' + currentBR + 'px',
+      moz:      '-moz-border-radius: ' + currentBR + 'px',
+      ms:        '-ms-border-radius: ' + currentBR + 'px',
+      o:          '-o-border-radius: ' + currentBR + 'px',
+      free:          'border-radius: ' + currentBR + 'px'
+    }
+
+	onlineResult.style.borderRadius = currentBR + 'px';
+
+    includeResult.innerHTML = 
+    	pref.webkit + '<br>' + 
+    	pref.moz + '<br>' + 
+    	pref.ms + '<br>' + 
+    	pref.o + '<br>' + 
+    	pref.free;
+};
+</script>
+
+</body>
+</html>
